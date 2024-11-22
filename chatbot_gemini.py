@@ -14,6 +14,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain 
 from langchain.chains.combine_documents import create_stuff_documents_chain 
 from dotenv import load_dotenv  
+from langchain.embeddings import HuggingFaceEmbeddings
 
 
 # Retrieve OpenAI API key from the .env file
@@ -40,7 +41,7 @@ llm = ChatGoogleGenerativeAI(
 )
 
 # Initialize embeddings using OpenAI
-embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
+embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
 
 def load_preprocessed_vectorstore():
     try:
