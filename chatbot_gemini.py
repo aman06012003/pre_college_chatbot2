@@ -15,7 +15,8 @@ from langchain.chains import create_history_aware_retriever, create_retrieval_ch
 from langchain.chains.combine_documents import create_stuff_documents_chain 
 from dotenv import load_dotenv  
 from langchain.embeddings import HuggingFaceEmbeddings
-
+import pysqlite3
+sys.modules['sqlite3'] = pysqlite3
 
 # Retrieve OpenAI API key from the .env file
 GOOGLE_API_KEY = "AIzaSyCOVPvbV9NEg2dYAsP5i98bQnsGQW_qWMc"
