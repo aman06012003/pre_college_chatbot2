@@ -1,11 +1,11 @@
 import os  
 import streamlit as st  
 import google.generativeai as genai  
-from langchain_openai import OpenAI 
+# from langchain_openai import OpenAI /
 from langchain_openai import OpenAIEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings  
 from langchain_google_genai import ChatGoogleGenerativeAI  
-from langchain_openai import OpenAIEmbeddings  
+# from langchain_openai import OpenAIEmbeddings  
 from langchain_community.document_loaders import Docx2txtLoader   
 from langchain.text_splitter import RecursiveCharacterTextSplitter  
 from langchain_community.vectorstores import Chroma  
