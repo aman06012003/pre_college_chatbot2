@@ -38,7 +38,7 @@ st.title("PreCollege Chatbot GEMINI+ open ai")
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",
     temperature=0,  # Slightly higher for varied responses
-    max_tokens=None,
+    max_tokens=500,
     timeout=None,
     max_retries=2,
 )
@@ -54,7 +54,7 @@ def load_preprocessed_vectorstore():
         text_splitter = RecursiveCharacterTextSplitter(
             separators=["\n\n", "\n", ". ", " ", ""],
             chunk_size=3000, 
-            chunk_overlap=200)
+            chunk_overlap=500)
         
         document_chunks = text_splitter.split_documents(documents)
 
@@ -62,7 +62,7 @@ def load_preprocessed_vectorstore():
             
             embedding=embeddings,
             documents=document_chunks,
-            persist_directory="./data2"
+            persist_directory="./data32"
         )
         return vector_store
     except Exception as e:
