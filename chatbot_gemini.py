@@ -18,7 +18,8 @@ from langchain.embeddings import HuggingFaceEmbeddings
 
 
 # Retrieve OpenAI API key from the .env file
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_API_KEY = "AIzaSyCOVPvbV9NEg2dYAsP5i98bQnsGQW_qWMc"
+# GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 if not GOOGLE_API_KEY:
