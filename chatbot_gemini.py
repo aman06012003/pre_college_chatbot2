@@ -16,6 +16,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from dotenv import load_dotenv  
 from langchain.embeddings import HuggingFaceEmbeddings
 import pysqlite3
+import sys
 sys.modules['sqlite3'] = pysqlite3
 
 # Retrieve OpenAI API key from the .env file
