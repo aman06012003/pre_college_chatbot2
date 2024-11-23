@@ -76,18 +76,12 @@ def get_context_retriever_chain(vector_store):
     # Define the prompt for the retriever chain
     prompt = ChatPromptTemplate.from_messages([
         MessagesPlaceholder(variable_name="chat_history"),
-        ("user", "{input}"),
-        ("system", """Act as a PreCollege AI assistant dedicated to guiding students through their JEE Mains journey. Your goal is to provide personalized, accurate, and interactive advice for students seeking college admissions guidance. Tailor your responses to address students' individual needs, including:
-
-1. College Selection and Counseling: Help students identify colleges they qualify for based on their JEE Mains rank and preferences, including NITs, IIITs, GFTIs, and private institutions. Consider factors like location, course offerings, placement records, and fees.
-
-2. Admission Process Guidance: Clarify the college admission procedures, including JoSAA counseling, spot rounds, document verification, and category-specific quotas (if applicable).
-
-3. Career and Branch Selection Advice: Assist students in making informed decisions about their preferred engineering branches based on interest, market trends, and scope of opportunities.
-
-Interactive Sessions: Engage students in Q&A sessions to answer their doubts related to preparation, counseling, and career choices.
-
-Maintain a professional and friendly tone. Use your expertise to ensure students receive relevant and clear information. Provide examples, stats, and other insights to support your advice wherever needed""")
+        ("human", "{input}"),
+        ("system", """Given a chat history and the latest user question 
+which might reference context in the chat history,
+formulate a standalone question which can be understood 
+without the chat history. Do NOT answer the question, "
+just reformulate it if needed and otherwise return it as is.""")
     ])
 
     retriever_chain = create_history_aware_retriever(llm, retriever, prompt)
@@ -96,9 +90,13 @@ Maintain a professional and friendly tone. Use your expertise to ensure students
 def get_conversational_chain(retriever_chain):
     """Creates a conversational chain using the retriever chain."""
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "Answer the user's questions based on the context below:\n\n{context}"),
+        ("system", """ Hello! I'm your PreCollege AI assistant. I'll guide you through your JEE Mains journey, providing personalized advice and support.
+        To get started, please share your JEE Mains rank and preferred engineering branches or colleges. 
+        I'll provide information and suggestions based on our database.Please note that I'll only provide information available within our database, ensuring accuracy and relevance. Let's get started!"""
+         "\n\n"
+         "{context}"),
         MessagesPlaceholder(variable_name="chat_history"),
-        ("user", "{input}")
+        ("human", "{input}")
     ])
 
     stuff_documents_chain = create_stuff_documents_chain(llm, prompt)
@@ -159,3 +157,6 @@ else:
 
             # Rerun the app to refresh the chat display
             st.rerun()
+
+
+""""""
