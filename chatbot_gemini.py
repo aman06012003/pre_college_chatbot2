@@ -36,9 +36,9 @@ st.title("PreCollege Chatbot GEMINI+ open ai")
 
 # Initialize OpenAI LLM 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-flash",
-    temperature=0,  # Slightly higher for varied responses
-    max_tokens=1000,
+    model="gemini-1.5-pro-latest",
+    temperature=0.2,  # Slightly higher for varied responses
+    max_tokens=None,
     timeout=None,
     max_retries=2,
 )
