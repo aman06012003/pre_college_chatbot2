@@ -5,6 +5,7 @@ anyio==4.6.2.post1
 attrs==24.2.0
 blinker==1.9.0
 cachetools==5.5.0
+bert-score
 certifi==2024.8.30
 charset-normalizer==3.4.0
 db-sqlite3
