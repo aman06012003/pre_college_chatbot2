@@ -20,7 +20,7 @@ import sys
 sys.modules['sqlite3'] = pysqlite3
 
 # Retrieve OpenAI API key from the .env file
-GOOGLE_API_KEY = "AIzaSyCOVPvbV9NEg2dYAsP5i98bQnsGQW_qWMc"
+GOOGLE_API_KEY = "AIzaSyAytkzRS0Xp0pCyo6WqKJ4m1o330bF-gPk"
 # GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
@@ -32,7 +32,7 @@ os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
 # os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 # Streamlit app configuration
 st.set_page_config(page_title="College Data Chatbot", layout="centered")
-st.title("PreCollege Chatbot GEMINI+ open ai")
+st.title("PreCollege Chatbot GEMINI+ HuggingFace Embeddings")
 
 # Initialize OpenAI LLM 
 llm = ChatGoogleGenerativeAI(
