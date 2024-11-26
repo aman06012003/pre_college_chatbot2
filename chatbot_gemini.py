@@ -20,7 +20,7 @@ import sys
 sys.modules['sqlite3'] = pysqlite3
 
 # Retrieve OpenAI API key from the .env file
-GOOGLE_API_KEY = "AIzaSyAytkzRS0Xp0pCyo6WqKJ4m1o330bF-gPk"
+GOOGLE_API_KEY = "AIzaSyCvkV4v4NPnPE2TcDGpIaJx56OIf_vUCnU"
 # GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 # OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
