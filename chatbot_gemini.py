@@ -77,11 +77,12 @@ def get_context_retriever_chain(vector_store):
     prompt = ChatPromptTemplate.from_messages([
         MessagesPlaceholder(variable_name="chat_history"),
         ("human", "{input}"),
-        ("system", """Given a chat history and the latest user question 
-which might reference context in the chat history,
-formulate a standalone question which can be understood 
-without the chat history. Do NOT answer the question, "
-just reformulate it if needed and otherwise return it as is.""")
+        ("system", """Given the chat history and the latest user question, which might reference context in the chat history, 
+formulate a standalone question that can be understood without the chat history.
+If the question is directly addressed within the provided document, provide a relevant answer. 
+If the question is not explicitly addressed in the document, return the following message: 
+'This question is beyond the scope of the available information. Please contact your mentor for further assistance.'
+Do NOT answer the question directly, just reformulate it if needed and otherwise return it as is.""")
     ])
 
     retriever_chain = create_history_aware_retriever(llm, retriever, prompt)
