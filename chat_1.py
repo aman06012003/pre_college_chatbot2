@@ -200,7 +200,7 @@ import sys
 sys.modules['sqlite3'] = pysqlite3
 
 # Set the Google API key
-GOOGLE_API_KEY = "AIzaSyAytkzRS0Xp0pCyo6WqKJ4m1o330bF-gPk"
+GOOGLE_API_KEY = "AIzaSyCvkV4v4NPnPE2TcDGpIaJx56OIf_vUCnU"
 if not GOOGLE_API_KEY:
     raise ValueError("Gemini API key not found. Please set it in the .env file.")
 
