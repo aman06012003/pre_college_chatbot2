@@ -186,7 +186,6 @@
 import os  
 import streamlit as st  
 import google.generativeai as genai  
-from langchain_google_genai import GoogleGenerativeAIEmbeddings  
 from langchain_google_genai import ChatGoogleGenerativeAI  
 from langchain_community.document_loaders import Docx2txtLoader   
 from langchain.text_splitter import RecursiveCharacterTextSplitter  
@@ -195,28 +194,26 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, SystemMessage  
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain 
 from langchain.chains.combine_documents import create_stuff_documents_chain 
-from dotenv import load_dotenv  
 from langchain.embeddings import HuggingFaceEmbeddings
 import pysqlite3
 import sys
 sys.modules['sqlite3'] = pysqlite3
 
-# Retrieve OpenAI API key from the .env file
+# Set the Google API key
 GOOGLE_API_KEY = "AIzaSyAytkzRS0Xp0pCyo6WqKJ4m1o330bF-gPk"
 if not GOOGLE_API_KEY:
     raise ValueError("Gemini API key not found. Please set it in the .env file.")
 
-# Set OpenAI API key
 os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY
 
 # Streamlit app configuration
 st.set_page_config(page_title="College Data Chatbot", layout="centered")
 st.title("PreCollege Chatbot GEMINI+ HuggingFace Embeddings")
 
-# Initialize Google Gemini LLM 
+# Initialize the Google Gemini LLM
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-pro-latest",
-    temperature=0.2,  # Slightly higher for varied responses
+    temperature=0.2, 
     max_tokens=None,
     timeout=None,
     max_retries=2,
@@ -294,4 +291,46 @@ def get_response(user_query):
         elif isinstance(message, SystemMessage):
             formatted_chat_history.append({"author": "assistant", "content": message.content})
     
-    response = conversation_rag
+    response = conversation_rag_chain.invoke({
+        "chat_history": formatted_chat_history,
+        "input": user_query
+    })
+    
+    return response['answer']
+
+# Load the preprocessed vector store from the local directory
+if "vector_store" not in st.session_state:
+    st.session_state.vector_store = load_preprocessed_vectorstore()
+
+# Initialize chat history if not present
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
+# Main app logic
+if st.session_state.vector_store is None:
+    st.error("Failed to load preprocessed data. Please ensure the data exists in './data32' directory.")
+else:
+    # Display chat history
+    with st.container():
+        for message in st.session_state.chat_history:
+            if message.get("author") == "assistant":
+                with st.chat_message("assistant"):
+                    st.write(message.get("content"))
+            elif message.get("author") == "user":
+                with st.chat_message("user"):
+                    st.write(message.get("content"))
+
+    # Add user input box below the chat
+    if user_query := st.chat_input("Type your message here..."):
+        # Append user query to chat history
+        st.session_state.chat_history.append({"author": "user", "content": user_query})
+
+        # Get bot response
+        response = get_response(user_query)
+
+        # Append response to chat history
+        st.session_state.chat_history.append({"author": "assistant", "content": response})
+
+        # Display response
+        with st.chat_message("assistant"):
+            st.write(response)
