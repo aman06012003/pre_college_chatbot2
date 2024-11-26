@@ -91,9 +91,11 @@ Do NOT answer the question directly, just reformulate it if needed and otherwise
 def get_conversational_chain(retriever_chain):
     """Creates a conversational chain using the retriever chain."""
     prompt = ChatPromptTemplate.from_messages([
-        ("system", """ Hello! I'm your PreCollege AI assistant. I'll guide you through your JEE Mains journey, providing personalized advice and support.
-        To get started, please share your JEE Mains rank and preferred engineering branches or colleges. 
-        I'll provide information and suggestions based on our database.Please note that I'll only provide information available within our database, ensuring accuracy and relevance. Let's get started!"""
+        ("system", """Hello! I'm your PreCollege AI assistant, here to help you with your JEE Mains journey. 
+Please provide your JEE Mains rank and preferred engineering branches or colleges, 
+and I'll give you tailored advice based on our verified database. 
+Note: I will only provide information that is available within our database to ensure accuracy. Let's get started!
+"""
          "\n\n"
          "{context}"),
         MessagesPlaceholder(variable_name="chat_history"),
