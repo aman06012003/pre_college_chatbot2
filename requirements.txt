@@ -87,5 +87,5 @@ uritemplate==4.1.1
 urllib3==2.2.3
 watchdog==6.0.0
 docx2txt
-sentence_transformers
+sentence-transformers==3.2.1
 chromadb
